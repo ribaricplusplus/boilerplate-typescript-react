@@ -1,3 +1,5 @@
+const { join } = require('path')
+
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
@@ -6,11 +8,14 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 module.exports = {
   mode: 'production',
   entry: [
-    './build/src/main.js'
+    './src/main.tsx'
   ],
   output: {
     path: __dirname + '/dist',
     filename: "main.[contenthash:8].js"
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
   },
   module: {
     rules: [
@@ -19,6 +24,15 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          {
+            test: /\.(js|mjs|jsx|ts|tsx)$/,
+            use: {
+              loader: 'ts-loader',
+              options: {
+                configFile: join(__dirname, 'tsconfig.release.json')
+              }
+            }
+          },
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           {
