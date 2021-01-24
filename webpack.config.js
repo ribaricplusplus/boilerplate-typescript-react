@@ -48,7 +48,7 @@ module.exports = {
             use: {
               loader: 'ts-loader',
               options: {
-                configFile: join(__dirname, 'tsconfig.release.json')
+                configFile: join(__dirname, 'tsconfig.json')
               }
             }
           },
