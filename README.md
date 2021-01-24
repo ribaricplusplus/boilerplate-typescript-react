@@ -22,6 +22,7 @@ To start, just click the **Use template** button. Now start adding your code in 
 
 ## Available Scripts
 
+- `dev` - Run a development server at `localhost:8000`
 - `clean` - remove coverage data, Jest cache and transpiled files,
 - `build` - transpile TypeScript to ES6,
 - `lint` - lint source files and tests,

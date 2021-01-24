@@ -1,4 +1,5 @@
 const { join } = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -6,17 +7,35 @@ const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 module.exports = {
-  mode: 'production',
+  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   entry: [
     './src/main.tsx'
   ],
   output: {
-    path: __dirname + '/dist',
+    path: process.env.NODE_ENV === 'development' ?
+      join(__dirname, 'build') :
+      join(__dirname, 'dist'),
     filename: "main.[contenthash:8].js"
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
+  devServer: {
+    contentBase: join(__dirname, 'build'),
+    contentBasePublicPath: '/',
+    port: 8000,
+    watchContentBase: true,
+    writeToDisk: true,
+    publicPath: '/'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Document',
+      template: 'index.html',
+      filename: 'index.html'
+    })
+  ],
+  devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : undefined,
   module: {
     rules: [
       {
